@@ -1,0 +1,73 @@
+  generator client {
+    provider = "prisma-client-js"
+  }
+
+  datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+  }
+
+  model User {
+    id_user    Int      @id @default(autoincrement())
+    nama_user  String   @default("")
+    role       Role   
+    username   String   @default("")
+    password   String   @default("")
+    transaksi  Transaksi[]
+  }
+
+  model Transaksi {
+    id_transaksi    Int      @id @default(autoincrement())
+    meja_id         Int      @default(0)
+    tgl_transaksi   DateTime 
+    nama_pelanggan  String   @default("")
+    user_id         Int      @default(0)
+    status          Status
+    meja            Meja     @relation(fields: [meja_id], references: [id_meja])
+    user            User     @relation(fields: [user_id], references: [id_user])
+    detailTransaksi DetailTransaksi[]
+  }
+
+  model DetailTransaksi {
+    id_detail_transaksi Int     @id @default(autoincrement())
+    transaksi_id        Int     @default(0)
+    menu_id             Int     @default(0)
+    harga               Int     @default(0)
+    quantity            Int     @default(0)
+    transaksi           Transaksi @relation(fields: [transaksi_id], references: [id_transaksi])
+    menu                Menu      @relation(fields: [menu_id], references: [id_menu])
+  }
+
+  model Menu {
+    id_menu    Int      @id @default(autoincrement())
+    nama_menu  String   @default("")
+    jenis      Jenis
+    deskripsi  String   @default("")
+    gambar     String   @default("")
+    harga      Int      @default(0)
+    detailTransaksi DetailTransaksi[]
+  }
+
+  model Meja {
+    id_meja     Int      @id @default(autoincrement())
+    nomor_meja  String   @default("")
+
+    Transaksi Transaksi[]
+  }
+
+
+  enum Role {
+    admin
+    kasir
+    manajer
+  }
+
+  enum Jenis {
+    makanan
+    minuman
+  }
+
+  enum Status {
+    belum_bayar
+    lunas
+  }
