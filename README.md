@@ -1,7 +1,3 @@
-Berikut adalah README untuk GitHub Anda berdasarkan kode yang telah Anda berikan. README ini mencakup langkah-langkah dan dependensi yang harus diunduh untuk memastikan proyek berjalan sesuai dengan kodingan yang Anda buat.
-
----
-
 # be_ukk_cafe
 
 Backend application for a cafe system using Node.js, TypeScript, Express, and Prisma.
